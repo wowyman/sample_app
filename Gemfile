@@ -35,7 +35,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "erb-formatter"
-  gem "sqlite3", "~>1.3.6"
+  gem 'sqlite3'
 end
 
 group :development do
@@ -55,5 +55,8 @@ group :test do
   gem "webdrivers"
 end
 
+group :production do
+  gem "pg", '~>0.18.4'
+end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]

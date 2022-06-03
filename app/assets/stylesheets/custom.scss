@@ -7,6 +7,10 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+h1 {
+  text-align: center;
+}
+
 body {
   padding-top: 60px;
 }
@@ -87,7 +91,7 @@ aside {
     }
     h1 {
       font-size: 1.4em;
-      text-align: left;
+      text-align: center;
       letter-spacing: -1px;
       margin-bottom: 3px;
       margin-top: 0px;

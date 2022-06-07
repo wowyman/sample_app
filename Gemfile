@@ -7,7 +7,10 @@ ruby "3.0.0"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 6.0.3", ">= 6.0.3.2"
+gem "image_processing", "1.9.3"
+gem "mini_magick", "4.9.5"
 # Use mysql2 as the database for Active Record
+gem "active_storage_validations", "0.8.9"
 gem "bcrypt", "3.1.13"
 gem "bootstrap-sass", "3.4.1"
 # Use Puma as the app server
@@ -24,13 +27,13 @@ gem "jbuilder", "~> 2.7"
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'erb-formatter'
-gem 'faker', '2.11.0'
-gem 'will_paginate', '3.3.0'
-gem 'bootstrap-will_paginate', '~> 1.0' 
+gem "erb-formatter"
+gem "faker", "2.11.0"
+gem "will_paginate", "3.3.0"
+gem "bootstrap-will_paginate", "~> 1.0"
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-gem 'rails-controller-testing'
+gem "rails-controller-testing"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false
 
@@ -38,7 +41,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i[mri mingw x64_mingw]
   gem "erb-formatter"
-  gem 'mysql2'
+  gem "mysql2"
 end
 
 group :development do
@@ -60,6 +63,7 @@ end
 
 group :production do
   gem "pg"
+  gem "aws-sdk-s3", "1.46.0", require: false
   # gem 'rails_12factor'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

@@ -2,7 +2,7 @@
 
 # This class is SessionsHelper
 module SessionsHelper
-  def log_in(user)
+  def log_in user
     session[:user_id] = user.id
   end
 
@@ -11,14 +11,11 @@ module SessionsHelper
       @current_user ||= User.find_by(id: user_id)
     elsif (user_id = cookies.encrypted[:user_id])
       user = User.find_by(id: user_id)
-      if user&.authenticated?(:remember, cookies[:remember_token])
-        log_in user
-        @current_user = user
-      end
+      log_in user if user&.authenticated?(:remember, cookies[:remember_token])
     end
   end
 
-  def current_user?(user)
+  def current_user? user
     user && user == current_user
   end
 
@@ -26,13 +23,13 @@ module SessionsHelper
     !current_user.nil?
   end
 
-  def remember(user)
+  def remember user
     user.remember
     cookies.permanent.encrypted[:user_id]
     cookies.permanent[:remember_token] = user.remember_token
   end
 
-  def forget(user)
+  def forget user
     user.forget
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
@@ -41,7 +38,6 @@ module SessionsHelper
   def log_out
     forget(current_user)
     reset_session
-    @current_user = nil
   end
 
   def store_location

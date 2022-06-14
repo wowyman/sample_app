@@ -1,0 +1,58 @@
+version: 2.1
+
+orbs:
+  ruby-rails-setup: later/ruby-rails-setup@0.0.3
+
+commands:
+  configure_bundler:
+    description: Configure bundler
+    steps:
+      - run:
+          name: Configure bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:3.0.0
+    steps:
+      - checkout
+      - configure_bundler
+      - run: bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      # - run:
+      #     name: deploy app to heroku
+      #     command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+  rubocop:
+    docker:
+      - image: circleci/ruby:3.0.0-node-browsers-legacy
+    steps:
+      - checkout
+      - configure_bundler
+      - run: gem install rubocop
+      - run: bundle install --jobs=4 --retry=3 --path vendor/bundle
+      - run: gem install rake
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+  deploy:
+    docker:
+      - image: circleci/ruby:3.0.0
+    steps:
+      - checkout
+      - run:
+          name: deploy app to heroku
+          command: git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - rubocop:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - build

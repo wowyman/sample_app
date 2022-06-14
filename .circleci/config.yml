@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  ruby-rails-setup: later/ruby-rails-setup@0.0.3
-
 commands:
   configure_bundler:
     description: Configure bundler
@@ -13,6 +10,8 @@ commands:
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
             gem install bundler
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+            gem install rake
 jobs:
   build:
     docker:
@@ -20,7 +19,6 @@ jobs:
     steps:
       - checkout
       - configure_bundler
-      - run: bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       # - run:
       #     name: deploy app to heroku
@@ -30,7 +28,7 @@ jobs:
       - image: circleci/ruby:3.0.0-node-browsers-legacy
     steps:
       - checkout
-      - run: gem install rake
+      - configure_bundler
       - run:
           name: Rubocop
           command: bundle exec rubocop
@@ -47,9 +45,5 @@ workflows:
   build-and-deploy:
     jobs:
       - build
-      - rubocop:
-          requires:
-            - build
-      - deploy:
-          requires:
-            - build
+      - rubocop
+      - deploy

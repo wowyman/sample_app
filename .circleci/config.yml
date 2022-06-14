@@ -36,7 +36,7 @@ jobs:
       - run: gem install rake
       - run:
           name: Rubocop
-          command: bundle exec rubocop
+          command: bundle exec rubocop -A
   deploy:
     docker:
       - image: circleci/ruby:3.0.0

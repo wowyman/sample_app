@@ -35,6 +35,7 @@ jobs:
   deploy:
     docker:
       - image: circleci/ruby:3.0.0
+    if: github.event.pull_request.merged == 'true'
     steps:
       - checkout
       - run:
@@ -46,6 +47,4 @@ workflows:
     jobs:
       - build
       - rubocop
-      - deploy:
-        branchers:
-          - master
+      - deploy

@@ -31,9 +31,6 @@ jobs:
     steps:
       - checkout
       - configure_bundler
-      - run: gem install rubocop
-      - run: bundle install --jobs=4 --retry=3 --path vendor/bundle
-      - run: gem install rake
       - run:
           name: Rubocop
           command: bundle exec rubocop

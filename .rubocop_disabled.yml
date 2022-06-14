@@ -1,3 +1,5 @@
+# These are all the cops that are disabled in the default configuration.
+
 Style/InlineComment:
   Description: "Avoid inline comments."
   Enabled: false
@@ -188,6 +190,7 @@ Rails/Date:
   Description: >-
     Do not use to_time on Date objects, because they know
     nothing about the time zone in use
+
 Rails/TimeZone:
   Enabled: false
   Description: >-
@@ -195,6 +198,7 @@ Rails/TimeZone:
     Time.current, Time.at.in_time_zone, Time.at.utc,
     Time.at.getlocal, Time.at.iso8601, Time.at.jisx0301,
     Time.at.rfc3339, Time.at.to_i, Time.at.to_f instead
+
 Layout/EndAlignment:
   Description: "Align ends correctly."
   Enabled: false
@@ -231,7 +235,4 @@ Rails/SkipsModelValidations:
   Enabled: false
 
 Rails/OutputSafety:
-  Enabled: false
-
-Rails/HasAndBelongsToMany:
   Enabled: false

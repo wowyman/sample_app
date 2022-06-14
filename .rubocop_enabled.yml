@@ -1,3 +1,5 @@
+# These are all the cops that are enabled in the default configuration.
+
 Layout/AccessModifierIndentation:
   Description: Check indentation of private/protected visibility modifiers.
   Enabled: true
@@ -148,6 +150,10 @@ Style/EmptyLiteral:
   Description: "Prefer literals to Array.new/Hash.new/String.new."
   Enabled: true
 
+Style/EndBlock:
+  Description: "Avoid the use of END blocks."
+  Enabled: true
+
 Layout/EndOfLine:
   Description: "Use Unix-style line endings."
   Enabled: true
@@ -228,8 +234,8 @@ Style/LineEndConcatenation:
     line end.
   Enabled: true
 
-Layout:
-  Description: "Limit lines to 80 characters."
+Layout/LineLength:
+  Description: "Limit lines to 120 characters."
   Enabled: true
 
 Style/MethodCallWithoutArgsParentheses:
@@ -295,6 +301,9 @@ Style/NumericLiterals:
     Add underscores to large numeric literals to improve their
     readability.
   Enabled: true
+  Exclude:
+    - spec/api/v1/customers_controller_spec.rb
+    - app/controllers/concerns/response_demo_data.rb
 
 Style/OneLineConditional:
   Description: >-
@@ -551,10 +560,6 @@ Lint/EmptyInterpolation:
   Description: "Checks for empty string interpolation."
   Enabled: true
 
-Style/EndBlock:
-  Description: "END blocks should not be placed inside method definitions."
-  Enabled: true
-
 Lint/EnsureReturn:
   Description: "Never use return in an ensure block."
   Enabled: true
@@ -634,10 +639,6 @@ Lint/UselessAssignment:
 Lint/BinaryOperatorWithIdenticalOperands:
   Description: "Checks for comparison of something with itself."
   Enabled: true
-
-# Lint/UselessElseWithoutRescue:
-#   Description: "Checks for useless `else` in `begin..end` without `rescue`."
-#   Enabled: true
 
 Lint/UselessSetterCall:
   Description: "Checks for useless setter call to a local variable."

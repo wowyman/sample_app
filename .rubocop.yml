@@ -1,17 +1,19 @@
+# This is rubocop configuration file for Framgia's coding style. Enabling and disabling is configured
+# in separate files. This file adds all other parameters apart from Enabled.
+
+# Put the following files into the same directory as this file.
+require: rubocop-performance
+require: rubocop-rails
+
 inherit_from:
   - .rubocop_enabled.yml
   - .rubocop_disabled.yml
-
-require:
-  - rubocop-performance
-  - rubocop-rails
 
 # Common configuration.
 Rails:
   Enabled: true
 
 AllCops:
-  NewCops: enable
   Exclude:
     - db/schema.rb
     - config/deploy.rb
@@ -19,7 +21,12 @@ AllCops:
     - config/initializers/custom_error.rb
     - "**/config.ru"
     - bin/*
-    - app/controllers/api/errors/base.rb
+    - vendor/**/*
+    - lib/tasks/import_data_from_csv.rake
+    - lib/tasks/export_customer_data_from_csv.rake
+    - csv-split.rb
+    - node_modules/node-sass/src/libsass/contrib/libsass.spec
+    - node_modules/node-sass/src/libsass/extconf.rb
   TargetRubyVersion: 3.0.0
 # Indent private/protected/public as deep as method definitions
 Layout/AccessModifierIndentation:
@@ -121,6 +128,12 @@ Layout/ParameterAlignment:
 Metrics/BlockNesting:
   Max: 4
 
+# Style/BracesAroundHashParameters:
+#   EnforcedStyle: no_braces
+#   SupportedStyles:
+#     - braces
+#     - no_braces
+
 # Indentation of `when`.
 Layout/CaseIndentation:
   EnforcedStyle: case
@@ -157,7 +170,7 @@ Style/ClassCheck:
     - kind_of?
 
 Metrics/ClassLength:
-  CountComments: false # count full line comments?
+  CountComments: false  # count full line comments?
   Max: 100
 
 # Align with the style guide.
@@ -169,11 +182,11 @@ Style/CollectionMethods:
   #   PreferredMethods:
   #     find: detect
   PreferredMethods:
-    collect: "map"
-    collect!: "map!"
-    inject: "reduce"
-    detect: "find"
-    find_all: "select"
+    collect: 'map'
+    collect!: 'map!'
+    inject: 'reduce'
+    detect: 'find'
+    find_all: 'select'
 
 # Checks formatting of special comments
 Style/CommentAnnotation:
@@ -218,9 +231,9 @@ Layout/EmptyLinesAroundModuleBody:
 
 Naming/FileName:
   Exclude:
-    - "**/Rakefile"
-    - "**/Gemfile"
-    - "**/Capfile"
+    - '**/Rakefile'
+    - '**/Gemfile'
+    - '**/Capfile'
 
 # Checks use of for or each in multiline loops.
 Style/For:
@@ -272,13 +285,12 @@ Style/LambdaCall:
     - call
     - braces
 
-Layout:
-  Max: 100
+Layout/LineLength:
+  Max: 120
   AllowURI: true
   Exclude:
     - config/routes.rb
-    - spec/controllers/api/**/*
-    - spec/support/**/*
+
 
 Style/Next:
   # With `always` all conditions at the end of an iteration needs to be
@@ -305,7 +317,7 @@ Style/MethodDefParentheses:
     - require_no_parentheses
 
 Metrics/MethodLength:
-  CountComments: false # count full line comments?
+  CountComments: false  # count full line comments?
   Max: 10
 
 Naming/MethodName:
@@ -327,15 +339,15 @@ Style/ParenthesesAroundCondition:
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    "%": ()
-    "%i": ()
-    "%q": ()
-    "%Q": ()
-    "%r": "{}"
-    "%s": ()
-    "%w": ()
-    "%W": ()
-    "%x": ()
+    '%':  ()
+    '%i': ()
+    '%q': ()
+    '%Q': ()
+    '%r': '{}'
+    '%s': ()
+    '%w': ()
+    '%W': ()
+    '%x': ()
 
 Naming/PredicateName:
   ForbiddenPrefixes:
@@ -346,6 +358,7 @@ Style/RaiseArgs:
   SupportedStyles:
     - compact # raise Exception.new(msg)
     - exploded # raise Exception, msg
+
 
 Style/RedundantReturn:
   # When true allows code like `return x, y`.
@@ -473,7 +486,6 @@ Style/WordArray:
 # Allow safe assignment in conditions.
 Lint/AssignmentInCondition:
   AllowSafeAssignment: true
-
 # Align ends correctly.
 Layout/EndAlignment:
   # The value `keyword` means that `end` should be aligned with the matching
@@ -523,4 +535,4 @@ Style/NumericPredicate:
   EnforcedStyle: comparison
 
 Metrics/PerceivedComplexity:
-  Max: 13
+  Max: 18

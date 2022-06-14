@@ -31,7 +31,7 @@ gem "bootstrap-will_paginate", "~> 1.0"
 gem "erb-formatter"
 gem "faker", "2.11.0"
 gem "rubocop"
-gem "rubocop-discourse"
+gem "rubocop-performance"
 gem "rubocop-rails"
 gem "will_paginate", "3.3.0"
 # Use Active Storage variant

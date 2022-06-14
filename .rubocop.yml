@@ -19,7 +19,7 @@ AllCops:
     - "**/config.ru"
     - bin/*
     - app/controllers/api/errors/base.rb
-  TargetRubyVersion: 2.5.1
+  TargetRubyVersion: 3.0.0
 # Indent private/protected/public as deep as method definitions
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent

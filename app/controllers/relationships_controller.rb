@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This class is RelationshipsController
 class RelationshipsController < ApplicationController
   before_action :logged_in_user
 

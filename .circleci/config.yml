@@ -30,7 +30,7 @@ jobs:
           name: Rubocop
           command: bundle exec rubocop
 
-  workflows:
+workflows:
   version: 2.1
   build-and-rubocop:
     jobs:

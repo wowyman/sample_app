@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
+# This class is MicropostController
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
+  before_action :logged_in_user, only: %i(create destroy)
   before_action :correct_user, only: :destroy
 
   def create
@@ -17,10 +20,10 @@ class MicropostsController < ApplicationController
   def destroy
     @micropost.destroy
     flash[:success] = "Micropost deleted"
-    if request.referrer.nil? || request.referrer == microposts_url
+    if request.referer.nil? || request.referer == microposts_url
       redirect_to root_url
     else
-      redirect_to request.referrer
+      redirect_to request.referer
     end
   end
 

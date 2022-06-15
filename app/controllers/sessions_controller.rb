@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
+# This class is SessionsController
 class SessionsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
-    if user && user.authenticate(params[:session][:password])
-      #log user
+    if user&.authenticate(params[:session][:password])
       if user.activated?
         forwarding_url = session[:forwarding_url]
         reset_session

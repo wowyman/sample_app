@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
@@ -6,7 +8,8 @@ class UserTest < ActiveSupport::TestCase
   # end
 
   def setup
-    @user = User.new(name: "Example User", email: "user@example.com", password: "foobar", password_confirmation: "foobar")
+    @user = User.new(name: "Example User", email: "user@example.com", password: "foobar",
+                     password_confirmation: "foobar")
   end
 
   test "should be valid" do
@@ -34,16 +37,16 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "email formatter valid" do
-    valid_address = %w[user@gmail.com User@ccc.com User@foo.com weed@gmail.com]
-    valid_address.each do |valid_address|
-      @user.email = valid_address
-      assert @user.valid?, "#{valid_address.inspect} should be valid"
+    valid_address = %w(user@gmail.com User@ccc.com User@foo.com weed@gmail.com)
+    valid_address.each do |valid_address1|
+      @user.email = valid_address1
+      assert @user.valid?, "#{valid_address1.inspect} should be valid"
     end
   end
 
   test "email validation should reject invalid addresses" do
-    invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
-                           foo@bar_baz.com foo@bar+baz.com]
+    invalid_addresses = %w(user@example,com user_at_foo.org user.name@example.
+                           foo@bar_baz.com foo@bar+baz.com)
     invalid_addresses.each do |invalid_address|
       @user.email = invalid_address
       assert_not @user.valid?, "#{invalid_address.inspect} should be invalid"
@@ -106,7 +109,7 @@ class UserTest < ActiveSupport::TestCase
       assert archer.feed.include?(post_self)
     end
     # Posts from unfollowed user
-    archer.microposts.each do |post_unfollowed|
+    archer.microposts.each do |post_unfollowed| # rubocop:todo Style/CombinableLoops
       assert_not michael.feed.include?(post_unfollowed)
     end
   end

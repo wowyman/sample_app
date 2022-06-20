@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'test_helper'
+require "test_helper"
 
 class RelationshipTest < ActiveSupport::TestCase
   # test "the truth" do
@@ -10,16 +10,16 @@ class RelationshipTest < ActiveSupport::TestCase
     @relationship = Relationship.new(follower_id: users(:michael).id, followed_id: users(:archer).id)
   end
 
-  test 'should be valid' do
+  test "should be valid" do
     assert @relationship.valid?
   end
 
-  test 'should require a follower_id' do
+  test "should require a follower_id" do
     @relationship.follower_id = nil
     assert_not @relationship.valid?
   end
 
-  test 'should require a followed_id' do
+  test "should require a followed_id" do
     @relationship.followed_id = nil
     assert_not @relationship.valid?
   end

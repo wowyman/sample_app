@@ -1,0 +1,17 @@
+on:
+  pull_request:
+    types: [closed]
+  push:
+    branches: -master
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "evening-savannah-85814" #Must be unique in Heroku
+          heroku_email: "maicongdanh29012001@gmail.com"
+####

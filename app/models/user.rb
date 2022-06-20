@@ -1,4 +1,13 @@
 class User < ApplicationRecord
+
+
+  # devise :database_authenticatable,
+  #        :registerable,
+  #        :recoverable,
+  #        :rememberable,
+  #        :validatable,
+  #        :omniauthable, :trackable
+         
   has_many :microposts, dependent: :destroy
   has_many :active_relationships,
            class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
@@ -14,6 +23,24 @@ class User < ApplicationRecord
   validates :email, presence: true, length: { maximum: 50 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  
+  def self.from_omniauth(auth)
+    result = User.where(email: auth.info.email).first
+    if result
+      return result
+    else
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.provider = auth.provider
+        user.uid = auth.uid
+        user.name = auth.info.name unless user.name != nil
+        user.email =  SecureRandom.hex + '@example.com' unless user.email != nil
+        user.activated = true
+        user.password = SecureRandom.urlsafe_base64 unless user.password != nil
+        user.save!
+      end
+    end
+  end
 
   def activate
     update_attribute(:activated, true)

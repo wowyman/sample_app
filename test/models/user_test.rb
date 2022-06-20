@@ -109,7 +109,7 @@ class UserTest < ActiveSupport::TestCase
       assert archer.feed.include?(post_self)
     end
     # Posts from unfollowed user
-    archer.microposts.each do |post_unfollowed|
+    archer.microposts.each do |post_unfollowed| # rubocop:todo Style/CombinableLoops
       assert_not michael.feed.include?(post_unfollowed)
     end
   end

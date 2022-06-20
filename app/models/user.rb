@@ -1,44 +1,41 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
-
-
   # devise :database_authenticatable,
   #        :registerable,
   #        :recoverable,
   #        :rememberable,
   #        :validatable,
   #        :omniauthable, :trackable
-         
+
   has_many :microposts, dependent: :destroy
   has_many :active_relationships,
-           class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+           class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
-  has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'followed_id', dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :follower
 
   attr_accessor :remember_token, :activation_token
+
   before_save :downcase_email
   before_create :create_activation_digest
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, length: { maximum: 50 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, length: { maximum: 50 }, format: { with: VALID_EMAIL_REGEX },
+                    uniqueness: { case_sensitive: false }
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
-  
   def self.from_omniauth(auth)
     result = User.where(email: auth.info.email).first
-    if result
-      return result
-    else
-      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-        user.provider = auth.provider
-        user.uid = auth.uid
-        user.name = auth.info.name unless user.name != nil
-        user.email =  SecureRandom.hex + '@example.com' unless user.email != nil
-        user.activated = true
-        user.password = SecureRandom.urlsafe_base64 unless user.password != nil
-        user.save!
-      end
+    result || where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.provider = auth.provider
+      user.uid = auth.uid
+      user.name = auth.info.name if user.name.nil?
+      user.email = "#{SecureRandom.hex}@example.com" if user.email.nil?
+      user.activated = true
+      user.password = SecureRandom.urlsafe_base64 if user.password.nil?
+      user.save!
     end
   end
 
@@ -51,12 +48,12 @@ class User < ApplicationRecord
     UserMailer.account_activation(self).deliver_now
   end
 
-  def User.digest(string)
+  def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
 
-  def User.new_token
+  def self.new_token
     SecureRandom.urlsafe_base64
   end
 
@@ -68,6 +65,7 @@ class User < ApplicationRecord
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
+
     BCrypt::Password.new(digest).is_password?(token)
   end
 
@@ -76,7 +74,7 @@ class User < ApplicationRecord
   end
 
   def feed
-    Micropost.where("user_id IN (:following_ids) OR user_id = :user_id",
+    Micropost.where('user_id IN (:following_ids) OR user_id = :user_id',
                     following_ids: following_ids, user_id: id)
   end
 

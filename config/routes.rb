@@ -17,10 +17,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # devise_for :users,
-  # controllers: {
-  #   omniauth_callbacks: 'omniauth_callbacks' }
-
   resources :account_activation, only: [:edit]
   resources :password_resets, only: %i(new create edit update)
   resources :microposts, only: %i(create destroy)

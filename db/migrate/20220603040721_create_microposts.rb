@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# This class is 1
 class CreateMicroposts < ActiveRecord::Migration[6.0]
   def change
     create_table :microposts do |t|

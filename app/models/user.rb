@@ -1,14 +1,20 @@
 # frozen_string_literal: true
 
-# This class is
 class User < ApplicationRecord
+  # devise :database_authenticatable,
+  #        :registerable,
+  #        :recoverable,
+  #        :rememberable,
+  #        :validatable,
+  #        :omniauthable, :trackable
+
   has_many :microposts, dependent: :destroy
   has_many :active_relationships,
            class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :following, through: :active_relationships, source: :followed
   has_many :passive_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :follower
-
+  has_many :providers, dependent: :destroy
   attr_accessor :remember_token, :activation_token
 
   before_save :downcase_email
@@ -16,9 +22,31 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 50 }, format: { with: VALID_EMAIL_REGEX },
-                    uniqueness: { case_sensitive: false }
+                    uniqueness: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+  def self.from_omniauth auth
+    result = User.where(email: auth.info.email).first
+    if result
+      if result.providers.find_by(provider: auth.provider).nil?
+        result.providers.create(provider: auth.provider)
+      else
+        puts "hello"
+      end
+    else
+      result = where(provider: auth.provider).first_or_create do |user|
+        user.name = auth.info.name if user.name.nil?
+        # user.email = "#{SecureRandom.hex}@example.com" if user.email.nil?
+        user.email = auth.info.email
+        user.activated = true
+        user.password = SecureRandom.urlsafe_base64 if user.password.nil?
+        user.save!
+      end
+      result.providers.create(provider: auth.provider)
+    end
+    result
+  end
 
   def activate
     update_attribute(:activated, true)

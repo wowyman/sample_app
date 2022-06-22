@@ -16,9 +16,12 @@ Rails.application.routes.draw do
       get :following, :followers
     end
   end
+
   resources :account_activation, only: [:edit]
   resources :password_resets, only: %i(new create edit update)
   resources :microposts, only: %i(create destroy)
   resources :relationships, only: %i(create destroy)
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  get "/auth/:provider/callback", to: "sessions#create_facebook"
+  get "/auth/google_oauth2/callback", to: "sessions#google_auth"
 end

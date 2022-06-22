@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# This class is UsersHelper
 module UsersHelper
   # Returns the Gravatar for the given user.
   def gravatar_for user, options = { size: 80 }

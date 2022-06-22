@@ -38,9 +38,9 @@ class UserTest < ActiveSupport::TestCase
 
   test "email formatter valid" do
     valid_address = %w(user@gmail.com User@ccc.com User@foo.com weed@gmail.com)
-    valid_address.each do |valid_address1|
-      @user.email = valid_address1
-      assert @user.valid?, "#{valid_address1.inspect} should be valid"
+    valid_address.each do |valid_address|
+      @user.email = valid_address
+      assert @user.valid?, "#{valid_address.inspect} should be valid"
     end
   end
 

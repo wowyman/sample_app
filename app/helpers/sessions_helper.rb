@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# This class is SessionsHelper
 module SessionsHelper
   def log_in user
     session[:user_id] = user.id
@@ -23,6 +22,11 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  def log_out
+    forget(current_user)
+    reset_session
+  end
+
   def remember user
     user.remember
     cookies.permanent.encrypted[:user_id]
@@ -33,11 +37,6 @@ module SessionsHelper
     user.forget
     cookies.delete(:user_id)
     cookies.delete(:remember_token)
-  end
-
-  def log_out
-    forget(current_user)
-    reset_session
   end
 
   def store_location

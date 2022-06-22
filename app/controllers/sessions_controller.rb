@@ -40,9 +40,9 @@ class SessionsController < ApplicationController
   end
 
   def create_facebook
-    user = User.from_omniauth(request.env["omniauth.auth"])
-    log_in user
-    redirect_to user
+    @user = User.from_omniauth(request.env["omniauth.auth"])
+    log_in @user
+    redirect_to @user
   end
 
   def auth

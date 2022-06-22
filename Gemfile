@@ -6,9 +6,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "3.0.0"
 gem "erb-formatter"
 gem "figaro"
-gem "omniauth"
 gem "omniauth-facebook"
-gem "omniauth-google-oauth2"
+gem "omniauth", ">= 1.6.1"
+gem "omniauth-google-oauth2", ">= 0.8.2"
+
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "rubocop"
 gem "rubocop-discourse"

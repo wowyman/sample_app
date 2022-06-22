@@ -28,7 +28,7 @@ jobs:
       - configure_bundler
       - run:
           name: Rubocop
-          command: bundle exec rubocop
+          command: bundle exec rubocop -A
 
 workflows:
   version: 2.1

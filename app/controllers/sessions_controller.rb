@@ -1,19 +1,12 @@
 # frozen_string_literal: true
 
-<<<<<<< HEAD
-=======
-# This class is SessionsController
->>>>>>> 21891a0f2fefc7f3a69469307f46aa8d03321751
 class SessionsController < ApplicationController
   def new; end
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
     if user&.authenticate(params[:session][:password])
-<<<<<<< HEAD
       # log user
-=======
->>>>>>> 21891a0f2fefc7f3a69469307f46aa8d03321751
       if user.activated?
         forwarding_url = session[:forwarding_url]
         reset_session

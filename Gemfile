@@ -11,10 +11,7 @@ gem "omniauth-facebook"
 gem "omniauth-google-oauth2", ">= 0.8.2"
 
 gem "omniauth-rails_csrf_protection", "~> 1.0"
-gem "rubocop"
-gem "rubocop-discourse"
-gem "rubocop-performance"
-gem "rubocop-rails"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "image_processing", "1.9.3"
 gem "mini_magick", "4.9.5"

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-
   # devise :database_authenticatable,
   #        :registerable,
   #        :recoverable,
@@ -30,18 +29,23 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     result = User.where(email: auth.info.email).first
     if result
-      return result
+      if result.providers.find_by(provider: auth.provider).nil?
+        result.providers.create(provider: auth.provider)
+      else
+        puts "hello"
+      end
     else
-      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-        user.provider = auth.provider
-        user.uid = auth.uid
-        user.name = auth.info.name unless user.name != nil
-        user.email = SecureRandom.hex + "@example.com" unless user.email != nil
+      result = where(provider: auth.provider).first_or_create do |user|
+        user.name = auth.info.name if user.name.nil?
+        # user.email = "#{SecureRandom.hex}@example.com" if user.email.nil?
+        user.email = auth.info.email
         user.activated = true
-        user.password = SecureRandom.urlsafe_base64 unless user.password != nil
+        user.password = SecureRandom.urlsafe_base64 if user.password.nil?
         user.save!
       end
+      result.providers.create(provider: auth.provider)
     end
+    return result
   end
 
   def activate

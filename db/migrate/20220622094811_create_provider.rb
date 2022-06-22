@@ -1,11 +1,9 @@
-class CreateProviders < ActiveRecord::Migration[6.0]
+class CreateProvider < ActiveRecord::Migration[6.0]
   def change
     create_table :providers do |t|
+      t.string :user_id
       t.string :provider
-      t.string :uid
       t.string :name
-
-      t.timestamps
     end
   end
 end

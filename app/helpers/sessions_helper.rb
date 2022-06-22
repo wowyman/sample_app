@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
+=======
+# This class is SessionsHelper
+>>>>>>> 21891a0f2fefc7f3a69469307f46aa8d03321751
 module SessionsHelper
   def log_in user
     session[:user_id] = user.id
@@ -22,11 +26,14 @@ module SessionsHelper
     !current_user.nil?
   end
 
+<<<<<<< HEAD
   def log_out
     forget(current_user)
     reset_session
   end
 
+=======
+>>>>>>> 21891a0f2fefc7f3a69469307f46aa8d03321751
   def remember user
     user.remember
     cookies.permanent.encrypted[:user_id]
@@ -39,6 +46,14 @@ module SessionsHelper
     cookies.delete(:remember_token)
   end
 
+<<<<<<< HEAD
+=======
+  def log_out
+    forget(current_user)
+    reset_session
+  end
+
+>>>>>>> 21891a0f2fefc7f3a69469307f46aa8d03321751
   def store_location
     session[:forwarding_url] = request.original_url if request.get?
   end

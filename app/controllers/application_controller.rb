@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# This class is ApplicationController
 class ApplicationController < ActionController::Base
   include SessionsHelper
   include ApplicationHelper

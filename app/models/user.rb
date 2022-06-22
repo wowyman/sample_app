@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
+=======
+# This class is
+>>>>>>> 21891a0f2fefc7f3a69469307f46aa8d03321751
 class User < ApplicationRecord
   # devise :database_authenticatable,
   #        :registerable,
@@ -22,7 +26,11 @@ class User < ApplicationRecord
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 50 }, format: { with: VALID_EMAIL_REGEX },
+<<<<<<< HEAD
                     uniqueness: true
+=======
+                    uniqueness: { case_sensitive: false }
+>>>>>>> 21891a0f2fefc7f3a69469307f46aa8d03321751
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 

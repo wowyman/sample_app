@@ -12,7 +12,7 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
-    def is_logged_in?
+    def logged_in?
       !session[:user_id].nil?
     end
 

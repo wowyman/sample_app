@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
+=======
+# This class is MicropostController
+>>>>>>> 21891a0f2fefc7f3a69469307f46aa8d03321751
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: %i(create destroy)
   before_action :correct_user, only: :destroy

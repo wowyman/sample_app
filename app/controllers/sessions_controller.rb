@@ -30,6 +30,7 @@ class SessionsController < ApplicationController
       u.name = auth["info"]["name"]
       u.email = auth["info"]["email"]
       u.image = auth["info"]["image"]
+      access_token = auth
       u.google_token = auth.credentials.token
       refresh_token = auth.credentials.refresh_token
       u.google_refresh_token = refresh_token if refresh_token.present?
@@ -40,9 +41,9 @@ class SessionsController < ApplicationController
   end
 
   def create_facebook
-    @user = User.from_omniauth(request.env["omniauth.auth"])
-    log_in @user
-    redirect_to @user
+    user = User.from_omniauth(request.env["omniauth.auth"])
+    log_in user
+    redirect_to user
   end
 
   def auth

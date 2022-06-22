@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+
   # devise :database_authenticatable,
   #        :registerable,
   #        :recoverable,
@@ -26,26 +27,21 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
-  def self.from_omniauth auth
+  def self.from_omniauth(auth)
     result = User.where(email: auth.info.email).first
     if result
-      if result.providers.find_by(provider: auth.provider).nil?
-        result.providers.create(provider: auth.provider)
-      else
-        puts "hello"
-      end
+      return result
     else
-      result = where(provider: auth.provider).first_or_create do |user|
-        user.name = auth.info.name if user.name.nil?
-        # user.email = "#{SecureRandom.hex}@example.com" if user.email.nil?
-        user.email = auth.info.email
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.provider = auth.provider
+        user.uid = auth.uid
+        user.name = auth.info.name unless user.name != nil
+        user.email = SecureRandom.hex + "@example.com" unless user.email != nil
         user.activated = true
-        user.password = SecureRandom.urlsafe_base64 if user.password.nil?
+        user.password = SecureRandom.urlsafe_base64 unless user.password != nil
         user.save!
       end
-      result.providers.create(provider: auth.provider)
     end
-    result
   end
 
   def activate
@@ -57,7 +53,7 @@ class User < ApplicationRecord
     UserMailer.account_activation(self).deliver_now
   end
 
-  def self.digest string
+  def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
@@ -71,7 +67,7 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
-  def authenticated? attribute, token
+  def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
 
@@ -87,15 +83,15 @@ class User < ApplicationRecord
                     following_ids: following_ids, user_id: id)
   end
 
-  def follow other_user
+  def follow(other_user)
     following << other_user
   end
 
-  def unfollow other_user
+  def unfollow(other_user)
     following.delete(other_user)
   end
 
-  def following? other_user
+  def following?(other_user)
     following.include?(other_user)
   end
 

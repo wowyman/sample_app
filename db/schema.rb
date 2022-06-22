@@ -12,7 +12,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2022_06_21_142502) do
+=======
+ActiveRecord::Schema.define(version: 2022_06_17_092458) do
+
+>>>>>>> eeca827... Add google and facebook authentication
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false

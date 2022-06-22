@@ -17,10 +17,14 @@ Rails.application.routes.draw do
     end
   end
 
+  # devise_for :users,
+  # controllers: {
+  #   omniauth_callbacks: 'omniauth_callbacks' }
+
   resources :account_activation, only: [:edit]
-  resources :password_resets, only: %i(new create edit update)
-  resources :microposts, only: %i(create destroy)
-  resources :relationships, only: %i(create destroy)
+  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :microposts, only: [:create, :destroy]
+  resources :relationships, only: [:create, :destroy]
 
   get "/auth/:provider/callback", to: "sessions#create_facebook"
   get "/auth/google_oauth2/callback", to: "sessions#google_auth"

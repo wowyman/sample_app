@@ -4,14 +4,11 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.0"
-gem "erb-formatter"
-gem "figaro"
-gem "omniauth", ">= 1.6.1"
+gem "omniauth"
+gem "omniauth-google-oauth2"
 gem "omniauth-facebook"
-gem "omniauth-google-oauth2", ">= 0.8.2"
-
 gem "omniauth-rails_csrf_protection", "~> 1.0"
-
+gem "figaro"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "image_processing", "1.9.3"
 gem "mini_magick", "4.9.5"

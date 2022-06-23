@@ -28,13 +28,11 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     result = User.find_or_create_by(email: auth.info.email)
-    result = where(provider: auth.provider).first_or_create do |user|
-      user.name = auth.info.name if user.name.nil?
-      user.email = auth.info.email
-      user.activated = true
-      user.password = SecureRandom.urlsafe_base64 if user.password.nil?
-      user.save!
-    end
+    result.name = auth.info.name if result.name.nil?
+    result.email = auth.info.email
+    result.activated = true
+    result.password = SecureRandom.urlsafe_base64 if result.password.nil?
+    result.save!
     result.providers.find_or_create_by(provider: auth.provider, name: auth.info.name)
     return result
   end

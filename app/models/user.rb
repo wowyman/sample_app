@@ -27,24 +27,15 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   def self.from_omniauth(auth)
-    result = User.where(email: auth.info.email).first
-    if result
-      if result.providers.find_by(provider: auth.provider).nil?
-        result.providers.create(provider: auth.provider)
-      else
-        puts "hello"
-      end
-    else
-      result = where(provider: auth.provider).first_or_create do |user|
-        user.name = auth.info.name if user.name.nil?
-        # user.email = "#{SecureRandom.hex}@example.com" if user.email.nil?
-        user.email = auth.info.email
-        user.activated = true
-        user.password = SecureRandom.urlsafe_base64 if user.password.nil?
-        user.save!
-      end
-      result.providers.create(provider: auth.provider)
+    result = User.find_or_create_by(email: auth.info.email)
+    result = where(provider: auth.provider).first_or_create do |user|
+      user.name = auth.info.name if user.name.nil?
+      user.email = auth.info.email
+      user.activated = true
+      user.password = SecureRandom.urlsafe_base64 if user.password.nil?
+      user.save!
     end
+    result.providers.find_or_create_by(provider: auth.provider, name: auth.info.name)
     return result
   end
 

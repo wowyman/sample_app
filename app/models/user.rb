@@ -34,7 +34,7 @@ class User < ApplicationRecord
     result.password = SecureRandom.urlsafe_base64 if result.password.nil?
     result.save!
     result.providers.find_or_create_by(provider: auth.provider, name: auth.info.name)
-    return result
+    result
   end
 
   def activate

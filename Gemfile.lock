@@ -171,6 +171,9 @@ GEM
     omniauth-rails_csrf_protection (1.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
+    parallel (1.22.1)
+    parser (3.1.2.0)
+      ast (~> 2.4.1)
     pg (0.18.4)
     public_suffix (4.0.7)
     puma (4.3.12)
@@ -327,9 +330,9 @@ DEPENDENCIES
   listen (~> 3.2)
   mini_magick (= 4.9.5)
   mysql2
-  omniauth
+  omniauth (>= 1.6.1)
   omniauth-facebook
-  omniauth-google-oauth2
+  omniauth-google-oauth2 (>= 0.8.2)
   omniauth-rails_csrf_protection (~> 1.0)
   pg
   puma (~> 4.1)

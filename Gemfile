@@ -4,11 +4,17 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.0"
-gem "omniauth"
-gem "omniauth-google-oauth2"
-gem "omniauth-facebook"
-gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "erb-formatter"
 gem "figaro"
+gem "omniauth-facebook"
+gem "omniauth", ">= 1.6.1"
+gem "omniauth-google-oauth2", ">= 0.8.2"
+
+gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem "rubocop"
+gem "rubocop-discourse"
+gem "rubocop-performance"
+gem "rubocop-rails"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "image_processing", "1.9.3"
 gem "mini_magick", "4.9.5"
@@ -33,10 +39,6 @@ gem "jbuilder", "~> 2.7"
 # gem 'bcrypt', '~> 3.1.7'
 gem "bootstrap-will_paginate", "~> 1.0"
 gem "faker", "2.11.0"
-gem "rubocop"
-gem "rubocop-discourse"
-gem "rubocop-performance"
-gem "rubocop-rails"
 gem "will_paginate", "3.3.0"
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -47,6 +49,7 @@ gem "bootsnap", ">= 1.4.2", require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: %i(mri mingw x64_mingw)
+
   gem "mysql2"
 end
 

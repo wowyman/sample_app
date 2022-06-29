@@ -1,6 +1,0 @@
-development:
-  secret_key_base: here_goes_my_secret_key_base
-  google_client_id: 761721814445-qafl73d9a17m7lablj5eg57l03t9oaln.apps.googleusercontent.com
-  google_client_secret: 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
-  facebook_client_id: 731897741230127
-  facebook_client_secret: 91b9fd6fe85de11d88d6fd6003dac45a

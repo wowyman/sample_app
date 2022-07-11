@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:session][:email].downcase)
-    if user&.authenticate(params[:session][:password])
+    if user&.authenticated?(params[:session][:password])
       # log user
       if user.activated?
         forwarding_url = session[:forwarding_url]
@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
       u.password = SecureRandom.urlsafe_base64
     end
     log_in @user
-    redirect_to menu_path
+    redirect_to @user
   end
 
   def create_facebook

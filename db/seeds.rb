@@ -4,9 +4,10 @@ User.create!(name: "Example User",
              email: "example@railstutorial.org",
              password: "foobar",
              password_confirmation: "foobar",
-             admin: true,
              activated: true,
              activated_at: Time.zone.now)
+u1 = User.first
+u1.add_role(:admin)
 # Generate a bunch of additional users.
 99.times do |n|
   name = Faker::Name.name
@@ -19,6 +20,7 @@ User.create!(name: "Example User",
                activated: true,
                activated_at: Time.zone.now)
 end
+
 # Generate microposts for a subset of users.
 users = User.order(:created_at).take(6)
 50.times do

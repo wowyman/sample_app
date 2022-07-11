@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: %i(index edit update destroy)
-  before_action :correct_user, only: %i(edit update)
-  before_action :admin_user, only: :destroy
+  load_and_authorize_resource
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.accessible_by(current_ability).paginate(page: params[:page])
   end
 
   def new
@@ -14,12 +12,10 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def create
-    @user = User.new(user_params)
     if @user.save
       # handle successful save
       @user.send_activation_email
@@ -31,11 +27,9 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = "Profile updated"
       redirect_to @user
@@ -45,7 +39,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
+    @user.destroy
     flash[:success] = "User deleted"
     redirect_to users_url
   end
@@ -60,14 +54,12 @@ class UsersController < ApplicationController
 
   def following
     @title = "Following"
-    @user = User.find(params[:id])
     @users = @user.following.paginate(page: params[:page])
     render "show_follow"
   end
 
   def followers
     @title = "Followers"
-    @user = User.find(params[:id])
     @users = @user.followers.paginate(page: params[:page])
     render "show_follow"
   end

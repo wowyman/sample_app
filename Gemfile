@@ -10,6 +10,10 @@ gem "omniauth-facebook"
 gem "omniauth", ">= 1.6.1"
 gem "omniauth-google-oauth2", ">= 0.8.2"
 
+gem "devise", "~> 4.1"
+gem "cancancan", "~> 3.0"
+gem "rolify"
+
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "rubocop"
 gem "rubocop-discourse"

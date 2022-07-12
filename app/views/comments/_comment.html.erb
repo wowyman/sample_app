@@ -1,0 +1,59 @@
+<% nesting = local_assigns.fetch(:nesting, 1) %>
+<% max_nesting = local_assigns[:max_nesting] %>
+<% continue_thread = local_assigns[:continue_thread] %>
+
+<%= tag.div id: dom_id(comment), class: "border-left pl-4 mt-4" do %>
+  <% if comment.deleted? %>
+    <strong>[deleted]</strong> <%= link_to "posted", url_for(comment: comment.id, anchor: dom_id(comment)) %>
+    <p>[deleted]</p>
+  <% else %>
+    <strong><%= comment.user.name %></strong> <%= link_to "posted", url_for(comment: comment.id, anchor: dom_id(comment)) %>
+    <%= simple_format comment.body %>
+  <% end %>
+
+  <div data-controller="reply">
+    <small>
+      <%= link_to "Reply", "#", data: { action: "click->reply#toggle" } %>
+      <%= link_to "Delete", [comment.commentable, comment], method: :delete, data: { confirm: "Are you sure?" } if comment.user == current_user %>
+    </small>
+
+    <%= render partial: "comments/form", locals: {
+                 micropost: comment.commentable,
+                 post_parent_id: reply_to_comment_id(comment, nesting, max_nesting),
+                 class: "mt-4 d-none",
+                 target: "reply.form",
+               } %>
+  </div>
+
+  <%= tag.div id: "#{dom_id(comment)}_comments" do %>
+    <% if continue_thread.present? && nesting >= continue_thread && comment.comments.any? %>
+      <%= link_to "Continue this thread", url_for(comment: comment.id, anchor: dom_id(comment)) %>
+    <% else %>
+      <%= render comment.comments, continue_thread: continue_thread, nesting: nesting + 1, max_nesting: local_assigns[:max_nesting] %>
+    <% end %>
+  <% end %>
+<% end %>
+
+
+<% if false %>
+  <%= link_to gravatar_for(comment.user, size: 20), comment.user %>
+  <span class="user"><%= link_to comment.user.name, comment.user %></span><br/>
+  <%= comment.body %>
+  <% if @current_user == comment.user %>
+    <%= link_to "Edit", edit_comment_path(comment) %>
+  <% end %>
+
+  <% if @current_user == comment.user || @current_user == comment.micropost.user %>
+    <%= link_to "Delete", comment, method: :delete, data: { confirm: "Are you sure?" }, style: "float: right" %>
+  <% end %>
+
+  <span class="timestamp">
+    <% from_reply_form ||= nil %>
+    <% unless from_reply_form %>
+      <%= link_to "reply", new_micropost_comment_path(comment.micropost, post_parent_id: comment.id) %>
+      <%= time_ago_in_words(comment.created_at) %>
+    <% end %>
+    ago.
+  </span>
+<% end %>
+

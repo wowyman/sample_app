@@ -14,6 +14,8 @@ gem "devise", "~> 4.1"
 gem "cancancan", "~> 3.0"
 gem "rolify"
 
+gem "closure_tree"
+
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "rubocop"
 gem "rubocop-discourse"

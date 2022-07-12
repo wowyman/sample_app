@@ -26,7 +26,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :microposts, only: [:create, :destroy]
+  resources :microposts do
+    resources :comments
+  end
+  resources :comments, only: [:create, :index]
+
   resources :relationships, only: [:create, :destroy]
 
   get "/auth/facebook/callback", to: "sessions#create_facebook"

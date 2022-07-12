@@ -1,0 +1,11 @@
+<%= form_with model: [micropost, Comment.new], html: { class: local_assigns[:class], data: { target: local_assigns[:target] } } do |form| %>
+  <%= f.hidden_field :post_parent_id %>
+    <%= link_to gravatar_for(current_user, size: 25), current_user %>
+    <span class="user"><%= link_to current_user.name, current_user %></span>
+    <%= f.text_field :body, placeholder: "Add a comment...", class: "text-field" %>
+    <span class="image">
+      <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", style: "width: 50%" %>
+    </span>
+    <%= f.submit "Comment", class: "btn btn-primary", style: "width: 14.5%" %>
+  <% end %>
+

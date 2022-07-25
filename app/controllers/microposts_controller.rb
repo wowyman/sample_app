@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class MicropostsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :micropost
+  load_and_authorize_resource :comment
 
   def create
     @micropost.image.attach(params[:micropost][:image])
@@ -30,6 +31,9 @@ class MicropostsController < ApplicationController
       @micropost.unliked_by current_user
     else
       @micropost.liked_by current_user
+    end
+    respond_to do |format|
+      format.js
     end
   end
 

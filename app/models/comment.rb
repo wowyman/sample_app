@@ -6,9 +6,13 @@ class Comment < ApplicationRecord
   belongs_to :micropost
   belongs_to :parent, class_name: "Comment", optional: true
   has_many :comments, foreign_key: "post_parent_id", dependent: :destroy
-
+  has_one_attached :image
+  validates :user_id, presence: true
   validates :body, presence: true, allow_blank: false
-
+  validates :image, content_type: { in: %w(image/jpeg image/gif image/png),
+                                    message: "must be a valid image format" },
+                    size: { less_than: 5.megabytes,
+                            message: "should be less than 5MB" }
   after_create_commit do
     if parent.present?
       broadcast_append_to [micropost, :comments], target: "#{dom_id(micropost, parent.id)}_comments"

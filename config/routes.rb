@@ -21,21 +21,15 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    member do
-      get :following, :followers
-    end
+    member { get :following, :followers, :chat }
   end
 
   resources :microposts do
     resources :comments
-    member do
-      put "likes" => "microposts#vote"
-    end
+    member { put "likes" => "comments#vote" }
   end
   resources :comments do
-    member do
-      put "likes" => "comments#vote"
-    end
+    member { put "likes" => "comments#vote" }
   end
 
   resources :relationships, only: [:create, :destroy]

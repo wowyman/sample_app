@@ -15,18 +15,19 @@ gem "cancancan", "~> 3.0"
 gem "rolify"
 
 gem "closure_tree"
-gem "turbo-rails"
+gem "hotwire-rails"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "rubocop"
 gem "rubocop-discourse"
 gem "rubocop-performance"
 gem "rubocop-rails"
 gem "acts_as_votable"
+gem "turbo-rails"
 gem "redis", "~> 4.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "image_processing", "1.9.3"
 gem "mini_magick", "4.9.5"
-gem "rails", "~> 6.0.3", ">= 6.0.3.2"
+gem "rails", "~> 6.1.4"
 # Use mysql2 as the database for Active Record
 gem "active_storage_validations", "0.8.9"
 gem "bcrypt", "3.1.13"
@@ -42,7 +43,7 @@ gem "webpacker", "~> 5.0"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.7"
 # Use Redis adapter to run Action Cable in production
-gem 'redis', '~> 4.0'
+gem "redis", "~> 4.0"
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem "bootstrap-will_paginate", "~> 1.0"

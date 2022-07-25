@@ -2,9 +2,8 @@ class CommentsController < ApplicationController
   include ActionView::RecordIdentifier
   include CommentsHelper
 
-  before_action :set_current_user
-  before_action :authenticate_user!
-  load_and_authorize_resource
+  load_and_authorize_resource :micropost
+  load_and_authorize_resource :comment
 
   def new
     @comment = Comment.new
@@ -46,6 +45,7 @@ class CommentsController < ApplicationController
     else
       @comment.liked_by current_user
     end
+
     respond_to do |format|
       format.html { redirect_to root_url }
     end
@@ -58,7 +58,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:body, :post_parent_id)
+    params.require(:comment).permit(:body, :post_parent_id, :micropost, :user)
   end
 
   def set_current_user

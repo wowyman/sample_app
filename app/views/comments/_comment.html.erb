@@ -2,27 +2,33 @@
 <%= turbo_frame_tag comment do %>
   <div id="comment-<%= comment.id %>" class="comment">
     <%= link_to gravatar_for(comment.user, size: 25), comment.user %>
-    <%= link_to comment.user.name, comment.user %>
-    <%= comment.body %>
-    <% if @current_user == comment.user %>
-      <%= link_to "Edit", edit_micropost_comment_path(comment) %>
-    <% end %>
-    <% if @current_user == comment.user || @current_user == comment.micropost.user %>
-      <%= link_to "Delete", comment, method: :delete, data: { confirm: "Are you sure?" } %>
-    <% end %>
-    <% if @current_user %>
-      <% if !current_user.liked? comment%>
-        <%= link_to "Like", likes_comment_path(comment), method: :put%>
-      <% else %>
-        <%= link_to "Unlike", likes_comment_path(comment), method: :put%>
+    <span class="user"><%= link_to comment.user.name, comment.user %></span>
+    <br/>
+    <span class="content">
+      <%= comment.body %>
+      <%= image_tag comment.image if comment.image.attached? %>
+    </span>
+    <span class="action">
+      <% if @current_user == comment.user %>
+        <%= link_to "Edit", edit_comment_path(comment) , remote: true%>
+        <div id="show"></div>
       <% end %>
-    <% end %>
+      <% if @current_user == comment.user || @current_user == comment.micropost.user %>
+        <%= link_to "Delete", comment, method: :delete, data: { confirm: "Are you sure?" } %>
+      <% end %>
+      <% if @current_user %>
+        <% if !current_user.liked? comment%>
+          <%= link_to "Like", likes_comment_path(comment), method: :put%>
+        <% else %>
+          <%= link_to "Unlike", likes_comment_path(comment), method: :put%>
+        <% end %>
+      <% end %>
+    </span>
   </div>
   <%= turbo_frame_tag "new_comment" do %>
     <span class="timestamp">
-      <%= link_to "Reply", new_micropost_comment_path(comment.micropost, post_parent_id: comment.id) %>
-      <%= time_ago_in_words(comment.created_at) %>
-      ago.
+      <%= link_to "Reply", new_micropost_comment_path(comment.micropost,post_parent_id: comment.id)%>
+      <%= time_ago_in_words(comment.created_at) %> ago.
     </span>
   <% end %>
   <div class="sub_comment">

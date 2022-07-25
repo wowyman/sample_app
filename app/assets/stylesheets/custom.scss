@@ -191,27 +191,14 @@ input {
 }
 // comment
 .comment {
-  list-style: none;
-  padding: 10px;
-  li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
-  }
-  .user {
-    margin-top: 5em;
-    padding-top: 5em;
-  }
+  display: block;
+  background-color: #eaeaea;
+  border-radius: 10px;
+  margin-top: 5px;
+  padding: 1px;
 
-  .timestamp {
-    color: $gray-light;
-    display: block;
-    margin-left: 60px;
-  }
-  .gravatar {
-    float: left;
-    margin-right: 10px;
-    margin-top: 5px;
-    padding-left: 20px;
+  .action {
+    float: right;
   }
 }
 .stats {
@@ -260,11 +247,4 @@ span.image {
   input {
     border: 0;
   }
-}
-.comment {
-  display: block;
-  background-color: #eaeaea;
-  border-radius: 10px;
-  margin-top: 5px;
-  padding: 1px;
 }

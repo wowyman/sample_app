@@ -13,7 +13,7 @@ class Ability
     can :read, User
     can [:update, :following, :followers], User, id: user.id
 
-    can [:vote, :read, :create], Comment
+    can [:vote, :read, :create, :edit], Comment
     can :update, Comment, user: user
     can :destroy, Comment, user: user
     can :destroy, Comment, micropost: { user: user }

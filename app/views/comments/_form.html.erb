@@ -1,12 +1,11 @@
-<%= puts "-----dau buoi re rach khong render-----" %>
-<% model = [local_assigns[:micropost],comment].compact %>
+<% model = [local_assigns[:micropost],@comment].compact %>
 <%= form_with model: model , id: dom_id_for_records(*model) do |f| %>
-  <% if comment.errors.any? %>
+  <% if @comment.errors.any? %>
     <div class="alert alert-danger">
       <div id="error_explanation">
-        <h2><%= pluralize(comment.errors.count, "error") %> prohibited this micropost from being saved:</h2>
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this micropost from being saved:</h2>
         <ul>
-          <% comment.errors.each do |error| %>
+          <% @comment.errors.each do |error| %>
             <li><%= error.full_message %></li>
           <% end %>
         </ul>
@@ -14,7 +13,7 @@
     </div>
   <% end %>
   <% if @parent.present? %>
-    <%= f.hidden_field :post_parent_id %>
+    <input type="hidden" name="comment[post_parent_id]" value="<%= @parent.id %>">
   <%end%>
   <%= link_to gravatar_for(current_user, size: 25), current_user %>
   <span class="user"><%= link_to current_user.name, current_user %></span>

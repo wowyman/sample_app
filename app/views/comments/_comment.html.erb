@@ -10,7 +10,7 @@
     </span>
     <span class="action">
       <% if @current_user == comment.user %>
-        <%= link_to "Edit", edit_comment_path(comment) , remote: true%>
+        <%= link_to "Edit", edit_comment_path(comment) , remote: true, id: "div_id"%>
         <div id="show"></div>
       <% end %>
       <% if @current_user == comment.user || @current_user == comment.micropost.user %>

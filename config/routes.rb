@@ -28,8 +28,15 @@ Rails.application.routes.draw do
 
   resources :microposts do
     resources :comments
+    member do
+      put "likes" => "microposts#vote"
+    end
   end
-  resources :comments, only: [:create, :index]
+  resources :comments do
+    member do
+      put "likes" => "comments#vote"
+    end
+  end
 
   resources :relationships, only: [:create, :destroy]
 

@@ -5,12 +5,13 @@ class MicropostsController < ApplicationController
 
   def create
     @micropost.image.attach(params[:micropost][:image])
-    if @micropost.save
-      flash[:success] = "Micropost created!"
-      redirect_to root_url
-    else
-      @feed_items = current_user.feed.paginate(page: params[:page])
-      render "static_pages/home"
+    respond_to do |format|
+      if @micropost.save
+        format.html { redirect_to root_url, notice: "Micropost created!" }
+      else
+        @feed_items = current_user.feed.paginate(page: params[:page])
+        format.html { render "static_pages/home", status: :unprocessable_entity }
+      end
     end
   end
 
@@ -21,6 +22,14 @@ class MicropostsController < ApplicationController
       redirect_to root_url
     else
       redirect_to request.referer
+    end
+  end
+
+  def vote
+    if current_user.liked? @micropost
+      @micropost.unliked_by current_user
+    else
+      @micropost.liked_by current_user
     end
   end
 

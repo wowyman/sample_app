@@ -189,7 +189,31 @@ input {
     margin-top: 5px;
   }
 }
+// comment
+.comment {
+  list-style: none;
+  padding: 10px;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 5em;
+  }
 
+  .timestamp {
+    color: $gray-light;
+    display: block;
+    margin-left: 60px;
+  }
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding-left: 20px;
+  }
+}
 .stats {
   overflow: auto;
   margin-top: 0;
@@ -237,9 +261,10 @@ span.image {
     border: 0;
   }
 }
-.replies {
-  margin-left: 50px;
-}
-.replies .replies .replies .replies .replies {
-  margin-left: 10px;
+.comment {
+  display: block;
+  background-color: #eaeaea;
+  border-radius: 10px;
+  margin-top: 5px;
+  padding: 1px;
 }

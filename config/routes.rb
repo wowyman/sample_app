@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     member { put "likes" => "comments#vote" }
   end
   resources :comments do
-    member { put "likes" => "comments#vote" }
+    resource :emote, only: :show
   end
 
   resources :relationships, only: [:create, :destroy]

@@ -16,13 +16,15 @@
       <% if @current_user == comment.user || @current_user == comment.micropost.user %>
         <%= link_to "Delete", comment, method: :delete, data: { confirm: "Are you sure?" } %>
       <% end %>
-      <% if @current_user %>
-        <% if !current_user.liked? comment%>
-          <%= link_to "Like", likes_comment_path(comment), method: :put%>
-        <% else %>
-          <%= link_to "Unlike", likes_comment_path(comment), method: :put%>
+      <div class='emojis'>
+        <% Emoji.all.each do |emoji| %>
+          <% size = comment.emotes_size(emoji[:key]) %>
+          <%= link_to comment_emote_path(comment, emote: emoji[:key]), class: "emoji #{size.zero? ? 'emoji-gray' : ''}" do %>
+            <%= image_tag File.join('emojis', emoji[:key]), size: '25x25', title: emoji[:text] %>
+            <%= content_tag :span, size, class: 'count' %>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
     </span>
   </div>
   <%= turbo_frame_tag "new_comment" do %>

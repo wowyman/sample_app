@@ -4,7 +4,18 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.accessible_by(current_ability).paginate(page: params[:page])
+    @users = User.all.paginate(page: params[:page])
+    @date_start = DateTime.now
+    @date_end = @date_start - 1.month
+    @microposts = current_user.microposts.where(:created_at => @date_end..@date_start)
+    @following_users = current_user.active_relationships.where(:created_at => @date_end..@date_start)
+    @followed_users = current_user.passive_relationships.where(:created_at => @date_end..@date_start)
+    micropost_csv = ExportCsvService.new(@microposts, Micropost::CSV_ATTRIBUTES, "microposts.csv")
+    following_csv = ExportCsvService.new(@following_users, Relationship::CSV_ATTRIBUTES, "following_users.csv", :followed)
+    follower_csv = ExportCsvService.new(@followed_users, Relationship::CSV_ATTRIBUTES, "follower_users.csv", :follower)
+    respond_to do |format|
+      format.zip { send_data ZipService.zip(micropost_csv, following_csv, follower_csv), filename: "export.zip" }
+    end
   end
 
   def new

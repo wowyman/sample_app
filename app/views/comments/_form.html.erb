@@ -1,5 +1,5 @@
 <% model = [local_assigns[:micropost],@comment].compact %>
-<%= form_with model: model , id: dom_id_for_records(*model) do |f| %>
+<%= form_with model: model , id: dom_id_for_records(*model),data: { controller: "turbo", action: "turbo:submit-end->reset-form#reset" } do |f| %>
   <% if @comment.errors.any? %>
     <div class="alert alert-danger">
       <div id="error_explanation">

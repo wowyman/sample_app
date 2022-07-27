@@ -2,3 +2,4 @@
 <name><%= current_user.name %></name>
 <span><%= link_to "view my profile", current_user %></span>
 <span><%= pluralize(current_user.microposts.count, "micropost") %></span>
+<%= link_to "Download zip", users_path(format: :zip) %>

@@ -13,7 +13,7 @@ gem "omniauth-google-oauth2", ">= 0.8.2"
 gem "devise", "~> 4.1"
 gem "cancancan", "~> 3.0"
 gem "rolify"
-
+gem "rubyzip", require: "zip"
 gem "closure_tree"
 gem "hotwire-rails"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
@@ -24,6 +24,7 @@ gem "rubocop-rails"
 gem "acts_as_votable"
 gem "turbo-rails"
 gem "redis", "~> 4.0"
+gem "stimulus-rails"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "image_processing", "1.9.3"
 gem "mini_magick", "4.9.5"
@@ -39,9 +40,9 @@ gem "sass-rails", ">= 6"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker", "~> 5.0"
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-
+gem "jquery-rails"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.7"
+gem "jbuilder", " 2.10.0"
 # Use Redis adapter to run Action Cable in production
 gem "redis", "~> 4.0"
 # Use Active Model has_secure_password

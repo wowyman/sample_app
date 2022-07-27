@@ -32,9 +32,6 @@ class MicropostsController < ApplicationController
     else
       @micropost.liked_by current_user
     end
-    respond_to do |format|
-      format.js
-    end
   end
 
   private

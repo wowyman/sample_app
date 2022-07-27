@@ -21,12 +21,17 @@ Rails.application.routes.draw do
   end
 
   resources :users do
-    member do
-      get :following, :followers
-    end
+    member { get :following, :followers, :chat }
   end
 
-  resources :microposts, only: [:create, :destroy]
+  resources :microposts do
+    resources :comments
+    member { put "likes" => "comments#vote" }
+  end
+  resources :comments do
+    resource :emote, only: :show
+  end
+
   resources :relationships, only: [:create, :destroy]
 
   get "/auth/facebook/callback", to: "sessions#create_facebook"

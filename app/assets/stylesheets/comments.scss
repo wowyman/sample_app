@@ -1,0 +1,36 @@
+// Place all the styles related to the Comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+.sub_comment {
+  padding-left: 20px;
+}
+.emojis {
+  margin-top: 10px;
+}
+.emoji img {
+  padding: 5px;
+}
+
+.emoji.emoji-gray img {
+  filter: grayscale(100%);
+}
+
+.emoji.emoji-gray img:hover {
+  filter: grayscale(0%);
+}
+
+.emoji {
+  position: relative;
+}
+
+.emoji .count {
+  position: absolute;
+  top: 10;
+  left: 0;
+  padding: 3px;
+  background-color: #269ba5;
+  text-decoration: none;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 10px;
+}

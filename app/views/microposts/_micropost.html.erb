@@ -6,6 +6,13 @@
     <%= image_tag micropost.image if micropost.image.attached? %>
   </span>
   <span class="timestamp">
+    <% if @current_user %>
+      <% if !current_user.liked? micropost%>
+        <%= link_to "Like", likes_micropost_path(micropost), method: :put%>
+      <% else %>
+        <%= link_to "Unlike", likes_micropost_path(micropost), method: :put%>
+      <% end %>
+    <% end %>
     Posted
     <%= time_ago_in_words(micropost.created_at) %>
     ago.
@@ -14,3 +21,9 @@
     <% end %>
   </span>
 </li>
+<%= turbo_stream_from micropost, :comments %>
+<%= tag.div id: "#{dom_id(micropost)}_comments" do %>
+  <%= render micropost.comments.where(post_parent_id: nil)%>
+<% end %>
+</br>
+<%= turbo_frame_tag "new_comment", src: new_micropost_comment_path(micropost), target: "_top" %>

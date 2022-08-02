@@ -12,11 +12,11 @@ class ExportCsvService
 
   def perform
     CSV.generate do |csv|
-      csv << @attributes
-      @objects.each do |object|
-        csv << @attributes.map do |attr|
-          if @role
-            object.send(@role).send(attr)
+      csv << attributes
+      objects.each do |object|
+        csv << attributes.map do |attr|
+          if role
+            object.send(role).send(attr)
           else
             object.send(attr)
           end

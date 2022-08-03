@@ -1,12 +1,12 @@
 class Comment < ApplicationRecord
   include ActionView::RecordIdentifier
-
+  has_one_attached :image
   acts_as_votable
   belongs_to :user
   belongs_to :micropost
   belongs_to :parent, class_name: "Comment", optional: true
   has_many :comments, foreign_key: "post_parent_id", dependent: :destroy
-  has_one_attached :image
+
   has_many :emotes, dependent: :destroy
   validates :user_id, presence: true
   validates :body, presence: true, allow_blank: false

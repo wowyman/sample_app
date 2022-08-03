@@ -17,12 +17,17 @@ class CommentsController < ApplicationController
   def create
     @comment = @micropost.comments.new(comment_params)
     @comment.user = current_user
+    @comment.image.attach(params[:comment][:image])
     respond_to do |format|
       if @comment.save
         format.turbo_stream { }
         format.html { redirect_to root_url }
         format.json { render :show, status: :created, location: @comment }
       else
+        format.turbo_stream {
+          render turbo_stream: turbo_stream.replace(dom_id_for_records(@micropost, @comment), partial: "comments/form",
+                                                                                              locals: { micropost: @micropost, comment: @comment })
+        }
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
@@ -59,7 +64,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:body, :post_parent_id, :micropost, :user)
+    params.require(:comment).permit(:body, :post_parent_id, :micropost, :user, :image)
   end
 
   def set_current_user

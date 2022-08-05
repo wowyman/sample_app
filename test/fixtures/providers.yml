@@ -2,10 +2,10 @@
 
 one:
   provider: MyString
-  uid: MyString
+  user_id: MyString
   name: MyString
 
 two:
   provider: MyString
-  uid: MyString
+  user_id: MyString
   name: MyString

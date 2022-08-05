@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource :micropost
   load_and_authorize_resource :comment
+  after_create :create_user_interactive
 
   def new
     @comment = Comment.new
@@ -47,6 +48,10 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment.destroy
+  end
+
+  def create_user_interactive
+    current_user.user_interactives.create
   end
 
   private

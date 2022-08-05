@@ -3,7 +3,7 @@ require "test_helper"
 class UserInteractiveTest < ActiveSupport::TestCase
   def setup
     @user = users(:michael)
-    @user_interactive = @user.user_interactive.build()
+    @user_interactive = @user.user_interactives.build()
   end
 
   test "should be valid" do

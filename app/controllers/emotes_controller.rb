@@ -4,6 +4,7 @@ class EmotesController < ApplicationController
     emote = current_user.emotes.find_or_initialize_by(comment: comment, emoji: params[:emote])
     if emote.new_record?
       emote.save
+      current_user.user_interactives.create
     else
       emote.destroy
     end

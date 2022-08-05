@@ -45,18 +45,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  def vote
-    if current_user.liked? @comment
-      @comment.unliked_by current_user
-    else
-      @comment.liked_by current_user
-    end
-
-    respond_to do |format|
-      format.html { redirect_to root_url }
-    end
-  end
-
   def destroy
     @comment.destroy
   end

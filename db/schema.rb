@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_26_054523) do
+ActiveRecord::Schema.define(version: 2022_08_05_054917) do
 
   create_table "active_storage_attachments", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -112,6 +112,13 @@ ActiveRecord::Schema.define(version: 2022_07_26_054523) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource_type_and_resource_id"
   end
 
+  create_table "user_interactives", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_interactives_on_user_id"
+  end
+
   create_table "users", charset: "utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -167,4 +174,5 @@ ActiveRecord::Schema.define(version: 2022_07_26_054523) do
   add_foreign_key "emotes", "comments"
   add_foreign_key "emotes", "users"
   add_foreign_key "microposts", "users"
+  add_foreign_key "user_interactives", "users"
 end

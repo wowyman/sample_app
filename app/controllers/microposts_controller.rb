@@ -8,6 +8,7 @@ class MicropostsController < ApplicationController
     @micropost.image.attach(params[:micropost][:image])
     respond_to do |format|
       if @micropost.save
+        current_user.user_interactives.create
         format.html { redirect_to root_url, notice: "Micropost created!" }
       else
         @feed_items = current_user.feed.paginate(page: params[:page])
@@ -23,14 +24,6 @@ class MicropostsController < ApplicationController
       redirect_to root_url
     else
       redirect_to request.referer
-    end
-  end
-
-  def vote
-    if current_user.liked? @micropost
-      @micropost.unliked_by current_user
-    else
-      @micropost.liked_by current_user
     end
   end
 

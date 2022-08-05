@@ -10,7 +10,7 @@ namespace :report do
     users_interacting = UserInteractive.where(created_at: date_end..date_start).group(:user_id)
     users_interacting_count = users_interacting.length
 
-    notifier.ping "<@U03S92E3GAJ> <@UJNGBBJ2U>
+    notifier.ping "<@U03S92E3GAJ> <@U03S9LQTT9U>
     #{DateTime.now.strftime("%m/%d/%Y")} report:
     - Current number of users: #{count}
     - New registered user yesterday: #{users_signup_yesterday}

@@ -3,6 +3,7 @@
 class MicropostsController < ApplicationController
   load_and_authorize_resource :micropost
   load_and_authorize_resource :comment
+  after_create :create_user_interactive
 
   def create
     @micropost.image.attach(params[:micropost][:image])
@@ -26,17 +27,13 @@ class MicropostsController < ApplicationController
     end
   end
 
-  def vote
-    if current_user.liked? @micropost
-      @micropost.unliked_by current_user
-    else
-      @micropost.liked_by current_user
-    end
-  end
-
   private
 
   def micropost_params
     params.require(:micropost).permit(:content, :image)
+  end
+
+  def create_user_interactive
+    current_user.user_interactives.create
   end
 end

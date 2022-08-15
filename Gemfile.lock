@@ -106,6 +106,7 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     childprocess (4.1.0)
+    chronic (0.10.2)
     closure_tree (7.4.0)
       activerecord (>= 4.2.10)
       with_advisory_lock (>= 4.0.0)
@@ -300,6 +301,7 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    slack-notifier (2.4.0)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -342,6 +344,8 @@ GEM
     websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    whenever (1.0.0)
+      chronic (>= 0.6.3)
     will_paginate (3.3.0)
     with_advisory_lock (4.6.0)
       activerecord (>= 4.2)
@@ -393,6 +397,7 @@ DEPENDENCIES
   rubyzip
   sass-rails (>= 6)
   selenium-webdriver
+  slack-notifier
   spring
   spring-watcher-listen (~> 2.0.0)
   stimulus-rails
@@ -401,6 +406,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
   webdrivers
   webpacker (~> 5.0)
+  whenever
   will_paginate (= 3.3.0)
 
 RUBY VERSION

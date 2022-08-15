@@ -14,6 +14,7 @@ class UsersController < ApplicationController
     following_csv = ExportCsvService.new(@following_users, Relationship::CSV_ATTRIBUTES, "following_users.csv", :followed)
     follower_csv = ExportCsvService.new(@followed_users, Relationship::CSV_ATTRIBUTES, "follower_users.csv", :follower)
     respond_to do |format|
+      format.html { }
       format.zip { send_data ZipService.zip(micropost_csv, following_csv, follower_csv), filename: "export.zip" }
     end
   end
@@ -33,7 +34,7 @@ class UsersController < ApplicationController
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
     else
-      render "new"
+      format.html { render "new" }
     end
   end
 
@@ -45,7 +46,7 @@ class UsersController < ApplicationController
       flash[:success] = "Profile updated"
       redirect_to @user
     else
-      render "edit"
+      format.html { render "edit" }
     end
   end
 
